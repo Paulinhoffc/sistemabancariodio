@@ -1,0 +1,94 @@
+
+#Criar sistema bancario com as operações: Sacar, Depositar e visualziar extrato 
+
+# Regra 1 Deposito 
+
+# Depositar valores positivos 
+# Armanezar os valores em uma variavel 
+# Exebir nos extratos 
+
+
+# Regra 2 Saque 
+# 3 Saques diarios 
+# Limite maximo 500 por saque
+# Exibir um aviso caso não tenha saldo em conta 
+#Armanezar em uma variavel e exibir nos extratos
+
+# Regra 3 Extrato
+# Lista todos os depositos e saqus da conta
+# Exibir o saldo atual 
+# PReencher os valores com formato R$ e com float
+
+
+
+
+
+saldo = 0 
+limite = 500
+extrato = ""
+numero_saques = 0
+LIMITE_SAQUES = 3
+
+menu = "EXTRATO"
+
+while True: 
+
+    opcao = int(input("""
+====== MENU =====
+[1] - Depósito 
+[2] - Sacar
+[3] - Vizualizar Extrato 
+[4] - Finalizar
+====== MENU ===== 
+                \n
+DIGITE O VALOR DA OPERAÇÃO: """))
+
+    if opcao == 1:
+        depositar_valor = float(input("Digite o valor do seu depósito: "))
+       
+        if depositar_valor > 0:       
+            saldo += depositar_valor
+            extrato  +=  f'Deposito: R$ {depositar_valor:.2f}\n'
+
+        else: 
+            print('Valor invalido, digite um valor acima de 0')
+
+    elif opcao == 2: 
+        valor_saque = float(input("Digite o valor do saque: "))
+
+        excedeu_saldo = valor_saque > saldo # Fazendo a verificação para ver se esta maior que saldo 
+        excedeu_limite = valor_saque > limite # Fazendo a verificação para ver se esta maior que o limite
+        excedeu_saques = numero_saques >= LIMITE_SAQUES # Fazendo a verificação para ver se passou limite de saques
+
+        if excedeu_saldo:
+            print(" Saldo insuficiente")
+
+        elif excedeu_limite:
+            print("Valor maior que o permitido, tente novamente.")
+
+        elif excedeu_saques: 
+            print("Excedeu numero de saques, volte amanha")
+
+        elif valor_saque > 0:
+            saldo -= valor_saque
+            extrato  +=  f'Saque: R$ {valor_saque:.2f}\n'
+            numero_saques += 1 # faz a contabilização de numeros de saques 
+        
+        else: 
+            print("Operação falhou, valor informado é invalido.")
+
+    elif opcao == 3:
+        print("\n ==========EXTRATO=========")
+        print("Não foram realizadas movimentações." if not extrato else extrato)
+        print(f"\n Saldo: R$ {saldo:.2f}")
+        print(f"Tentativas de saque realizadas {numero_saques}")
+        print("=============================")
+
+
+    elif opcao == 4:
+        break
+        
+
+    else:
+        print("Erro! operação invalida, tente novamente.")
+
